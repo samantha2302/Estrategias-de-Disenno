@@ -1,1 +1,1 @@
-# Estrategias-de-Dise-o
+# Estrategias de Diseño
