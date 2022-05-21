@@ -1,6 +1,7 @@
 package estrategias_de_diseño;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class dynamicAlgorithm {
     
@@ -14,21 +15,16 @@ public class dynamicAlgorithm {
     
     // Look for the minimum spend
     static void minWaste (int [] array){
-       for (int i=1; i<=array.length; i++){
+        //Get all the columns combinations 
+        for (int i=1; i<=array.length; i++){
             combinationUtil(array, (new int[i]), 0, array.length-1, 0, i);
         }
-        
-        System.out.println(combinations);
-        //2;5;9;2,5;2,9;5,9;
-        String arrlol1[] = combinations.split(";");
-        //{"2","5","9","2,5"...}
-        ArrayList<ArrayList<int>> lol2  = new ArrayList();
-        ArrayList<ArrayList<String>> temp;
-        for(int j=0; j<arrlol1.length; j++){
-            temp = arrlol2[j].split(","); //["2"],["5"],["9"],["2","5"], ["2","9"]
-            for (int i=0; i<tmp.length; i++)
-                lol2.add(temp[i].toInteger());
-        }
+        // System.out.print(combinations);
+        //Convert the combinations in ArrayList
+        ArrayList<ArrayList> arrayL  = combinationToArrayList(combinations);
+
+        System.out.println(arrayL.toString());
+
     }
 
     public static void combinationUtil(int arr[], int data[], int start,
@@ -36,10 +32,11 @@ public class dynamicAlgorithm {
          // Current combination is ready to be printed, print it
         if (index == r)
         {
-            for (int j=0; j<r; j++)
-                combinations += (data[j]+",");
+            combinations+=data[0];
+            for (int j=1; j<r; j++)
+                combinations += (","+data[j]);
             combinations += (";");
-
+            
             
             return;
         }
@@ -55,11 +52,50 @@ public class dynamicAlgorithm {
         }
     }
  
-    
+    public static ArrayList<ArrayList> combinationToArrayList (String combinations){
+        ArrayList<ArrayList> array  = new ArrayList();
+        array.add(new ArrayList());
+        String tmp = "";
+        for (int i = 0; i<combinations.length(); i++){
+            switch (combinations.charAt(i)) {
+                case ';':
+                    array.get(array.size()-1).add(Integer.parseInt(tmp));
+                    array.add(new ArrayList());
+                    tmp = "";
+                    break;
+                case ',':
+                    array.get(array.size()-1).add(Integer.parseInt(tmp));
+                    tmp = "";                    
+                    break;
+                default:
+                    tmp += combinations.charAt(i);
+                    break;
+            }
+        }
+        array.remove(array.size()-1);
+        return array;
+    }
  
     /*Driver function to check for above function*/
     public static void main (String[] args) {
-        minWaste (burned[0]);
+        //String jeje = "2;5;9;2,5;2,9;5,9;2,5,9;";
+        // int [] array = {2,5,9};
+        // for (int i=1; i<=array.length; i++){
+        //     combinationUtil(array, (new int[i]), 0, array.length-1, 0, i);
+        // }
+        // System.out.print(combinations);
+        // ArrayList<ArrayList> arrayjj  = combinationToArrayList(jeje);
+        // for (ArrayList arrayList1 : arrayjj) {
+        //     System.out.println("Nueva mini lista");
+        //     for (Object object : arrayList1) {
+        //         System.out.print((Integer)object+" - ");
+        //     }
+        // }
+        for(int i = 0; i<burned.length; i++){
+            minWaste(burned[i]);
+            System.out.println("\n\n===============================\n\n");
+            combinations="";
+        }
     }
 }
 
