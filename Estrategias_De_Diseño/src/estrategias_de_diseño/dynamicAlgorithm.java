@@ -4,24 +4,21 @@ import java.util.ArrayList;
 
 public class dynamicAlgorithm {
     
-    static int dynamicComparisons = 0; //comparasions variable
-    static int dynamicAssignments = 3; //assignments variable, min, solution, combination assignments
-    static float dynamicMemory = 4;      //memory variable, min, solution 2, combination memory bytes
+    private int dynamicComparisons = 0; //comparasions variable
+    private int dynamicAssignments = 3; //assignments variable, min, solution, combination assignments
+    private float dynamicMemory = 4;      //memory variable, min, solution 2, combination memory bytes
 
-    static int min = 10000000;          //variable minimum total waste
-    static int solution[];              //contains the best package and amounts combination
-    static String combinations = "";    //save all possible combinations
-    static int [][] burned = {          //burned data
-        {2,5,9}, //length 3
-        {5,6,7,9,8,}, //length 5
-        {3,8,13,19,29,31}, //length 6
-        {2,7,9,11,15,17,23,29,37} //length 9  
-    }; 
-
+    private int min = 10000000;          //variable minimum total waste
+    private int solution[];              //contains the best package and amounts combination
+    private String combinations = "";    //save all possible combinations
+    private Records records;
     
+    public dynamicAlgorithm(Records records){
+        this.records = records;
+    }
     
     // Look for the minimum waste
-    static void minWaste (int [] array, int n){
+    private void minWaste (int [] array, int n){
         solution = new int[array.length];//assign the correct length of the array solution
         int k; //Helps to increment every column
         int tmp; //Temporary minimun waste
@@ -103,7 +100,7 @@ public class dynamicAlgorithm {
     }
 
     //Clone the values of the arr into the global array solution
-    public static void cloneArray(int arr[]){
+    public void cloneArray(int arr[]){
         dynamicMemory+=2; //i memory bytes
         dynamicMemory+=arr.length*2;
         dynamicAssignments+=2;
@@ -116,7 +113,7 @@ public class dynamicAlgorithm {
     }
     
     //Convert the string combinations into a matrix of arrayList
-    public static ArrayList<ArrayList> stringToArrayList (String combinations){
+    public ArrayList<ArrayList> stringToArrayList (String combinations){
         ArrayList<ArrayList> array  = new ArrayList();
         String tmp = ""; //tmp number
         dynamicMemory+=4;
@@ -159,7 +156,7 @@ public class dynamicAlgorithm {
         
     }
  
-    public static void combinationUtil(int arr[], int data[], int start,
+    public void combinationUtil(int arr[], int data[], int start,
                                 int end, int index, int r){
          // Current combination is ready to be printed, print it
         dynamicAssignments+=6;
@@ -200,7 +197,7 @@ public class dynamicAlgorithm {
         dynamicComparisons ++; //For false comparisson
     }
 
-    public static String arrayToString(int [] array){
+    public String arrayToString(int [] array){
         String x = ""+array[0];
         dynamicAssignments+=3;
         dynamicMemory+=array.length*2;
@@ -216,7 +213,7 @@ public class dynamicAlgorithm {
     }
     
     //Print the minimun waste of a number with the combinations in the array
-    public static void printMinWaste (int arr[], int n, Records records) {
+    public void printMinWaste (int arr[], int n) {
         minWaste(arr, n);
         dynamicAssignments+=2;
         dynamicMemory++;
@@ -227,6 +224,8 @@ public class dynamicAlgorithm {
         ", con un desperdicio de: " + (min-n));
         records.setDynamicAssignments(dynamicAssignments);
         records.setDynamicComparisons(dynamicComparisons);
+        records.setDynamicMemory(dynamicMemory);
+        
     }
     
     

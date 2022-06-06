@@ -12,7 +12,7 @@ package estrategias_de_diseño;
 public class Estrategias_De_Diseño {
     static int [][] burned = { //
         {2,5,9}, //3
-        {7,9,8,6,5}, //5
+        {5,6,7,8,9}, //5
         {3,8,13,19,29,31}, //6
         {2,7,9,11,15,17,23,29,37} //9  
     };
@@ -21,7 +21,14 @@ public class Estrategias_De_Diseño {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(3/2*2!=3);
+        for (int i = 0; i < burned.length; i++) {
+            System.out.print("<<<<<<<<< Array [ "+burned[i][0]);
+            for (int j = 1; j < burned[i].length; j++) {
+                System.out.print(", "+burned[i][j]);
+            }
+            System.out.println(" ] >>>>>>>>>");
+            (new Records()).menu(burned[i], 57);
+        }
     }
     
 }

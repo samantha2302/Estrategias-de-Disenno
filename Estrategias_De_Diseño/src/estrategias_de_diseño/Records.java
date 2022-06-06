@@ -4,27 +4,28 @@ package estrategias_de_diseño;
 import java.util.Scanner;
 
 public class Records {
-    static String mutations = "";
-    static String wasteAndCombination = "";
-    static String crossoverUC = "======Cruce Uniforme======\n";
-    static String crossoverTPC = "======Cruce Dos Puntos======\n";
-    static String best5UC = "======Mejores 5 del Cruce Uniforme======";
-    static String best5TPC = "======Mejores 5 del Cruce Dos Puntos======";
-    static int dynamicAssignments;
-    static int dynamicComparisons;
-    static float dynamicMemory;
-    static int geneticAssignments;
-    static int geneticComparisons;
-    static float geneticMemory;
+    private String mutations = "";
+    private String wasteAndCombination = "";
+    private String crossoverUC = "======Cruce Uniforme======\n";
+    private String crossoverTPC = "======Cruce Dos Puntos======\n";
+    private String best5UC = "======Mejores 5 del Cruce Uniforme======";
+    private String best5TPC = "======Mejores 5 del Cruce Dos Puntos======";
+    private int dynamicAssignments;
+    private int dynamicComparisons;
+    private float dynamicMemory;
+    private int geneticAssignments;
+    private int geneticComparisons;
+    private float geneticMemory;
 
     public void menu(int [] array, int num){
         int option = 0;
         Scanner ask = new Scanner(System.in);
-        (new geneticAlgorithm()).searchMinWaste(array, num, this);
+        (new geneticAlgorithm(this, array, num)).searchMinWaste();
+        (new dynamicAlgorithm(this)).printMinWaste(array, num);
         while (true){
-            System.out.print("\n\nConsultas\n\n");
+            System.out.print("\n\tConsultas\n\n");
             System.out.print("\n\nDigite \n\t1) Desperdicio y Mejor Combinación\n\t"+
-            "2) Mediciones\n\t3) Cruces\n\t4) Mutaciones\n\t5) 5 Mejores Problaciones\n\n"+
+            "2) Mediciones\n\t3) Cruces\n\t4) Mutaciones\n\t5) 5 Mejores Problaciones\n"+
             "\t6) Salir\n\n");
             System.out.println("Ingrese la opción: ");
             option = ask.nextInt();
@@ -69,20 +70,20 @@ public class Records {
         }
     }
 
-    public static void setDynamicAssignments(int n){ dynamicAssignments = n; }
-    public static void setDynamicComparisons(int n){ dynamicComparisons = n; }
-    public static void setDynamicMemory(int n){ dynamicMemory = n; }
-    public static void setGeneticAssignments(int n){ geneticAssignments = n; }
-    public static void setGeneticComparisons(int n){ geneticComparisons = n; }
-    public static void setGeneticMemory(int n){ geneticMemory = n; }
+    public void setDynamicAssignments(int n){ dynamicAssignments = n; }
+    public void setDynamicComparisons(int n){ dynamicComparisons = n; }
+    public void setDynamicMemory(float n){ dynamicMemory = n; }
+    public void setGeneticAssignments(int n){ geneticAssignments = n; }
+    public void setGeneticComparisons(int n){ geneticComparisons = n; }
+    public void setGeneticMemory(float n){ geneticMemory = n; }
     
-    public static void addToMutations(String add){ mutations += add; }
-    public static void addToWasteAndCombination(String add){ wasteAndCombination += add; }
+    public void addToMutations(String add){ mutations += add; }
+    public void addToWasteAndCombination(String add){ wasteAndCombination += add; }
 
-    public static void addCrossoverUC(String add){ mutations += add; }
-    public static void addCrossoverTPC(String add){ mutations += add; }
+    public void addCrossoverUC(String add){ crossoverUC += add; }
+    public void addCrossoverTPC(String add){ crossoverTPC += add; }
 
-    public static void addBest5UC(String add){ best5UC += add; }
-    public static void addBest5TPC(String add){ best5TPC += add; }
+    public void addBest5UC(String add){ best5UC += add; }
+    public void addBest5TPC(String add){ best5TPC += add; }
 
 }
