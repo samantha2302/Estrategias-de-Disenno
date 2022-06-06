@@ -17,6 +17,11 @@ public class dynamicAlgorithm {
         this.records = records;
     }
     
+    /**
+     * 
+     * @param array
+     * @param n 
+     */
     // Look for the minimum waste
     private void minWaste (int [] array, int n){
         solution = new int[array.length];//assign the correct length of the array solution
@@ -99,6 +104,10 @@ public class dynamicAlgorithm {
         dynamicComparisons ++; //for false comparisson
     }
 
+    /**
+     * 
+     * @param arr 
+     */
     //Clone the values of the arr into the global array solution
     public void cloneArray(int arr[]){
         dynamicMemory+=2; //i memory bytes
@@ -112,6 +121,11 @@ public class dynamicAlgorithm {
         dynamicComparisons ++; //For false comparisson
     }
     
+    /**
+     * 
+     * @param combinations
+     * @return 
+     */
     //Convert the string combinations into a matrix of arrayList
     public ArrayList<ArrayList> stringToArrayList (String combinations){
         ArrayList<ArrayList> array  = new ArrayList();
@@ -156,6 +170,15 @@ public class dynamicAlgorithm {
         
     }
  
+    /**
+     * 
+     * @param arr
+     * @param data
+     * @param start
+     * @param end
+     * @param index
+     * @param r 
+     */
     public void combinationUtil(int arr[], int data[], int start,
                                 int end, int index, int r){
          // Current combination is ready to be printed, print it
@@ -197,6 +220,11 @@ public class dynamicAlgorithm {
         dynamicComparisons ++; //For false comparisson
     }
 
+    /**
+     * 
+     * @param array
+     * @return 
+     */
     public String arrayToString(int [] array){
         String x = ""+array[0];
         dynamicAssignments+=3;
@@ -212,6 +240,11 @@ public class dynamicAlgorithm {
         return x;
     }
     
+    /**
+     * 
+     * @param arr
+     * @param n 
+     */
     //Print the minimun waste of a number with the combinations in the array
     public void printMinWaste (int arr[], int n) {
         minWaste(arr, n);
