@@ -16,12 +16,22 @@ public class Records {
     private int geneticAssignments;
     private int geneticComparisons;
     private float geneticMemory;
+    private long timeDynamic;
+    private long timeGenetic;
 
     public void menu(int [] array, int num){
         int option = 0;
         Scanner ask = new Scanner(System.in);
+        long time_start, time_end;
+        time_start = System.nanoTime(); 
         (new geneticAlgorithm(this, array, num)).searchMinWaste();
+        time_end = System.nanoTime();
+        timeGenetic = ( time_end - time_start );
+        time_start = System.nanoTime(); 
         (new dynamicAlgorithm(this)).printMinWaste(array, num);
+        time_end = System.nanoTime();
+        timeDynamic = ( time_end - time_start );
+        
         while (true){
             System.out.print("\n\tConsultas\n\n");
             System.out.print("\n\nDigite \n\t1) Desperdicio y Mejor Combinación\n\t"+
@@ -40,10 +50,12 @@ public class Records {
                     System.out.println("\nAsignaciones: "+dynamicAssignments);
                     System.out.println("\nComparaciones: "+dynamicComparisons);
                     System.out.println("\nMemoria: "+dynamicMemory+" bytes");
+                    System.out.println("\nTiempo: "+(timeDynamic/1000000)+" milisegundos");
                     System.out.println("\n\n===================Algoritmo Genético===================\n");
                     System.out.println("\nAsignaciones: "+geneticAssignments);
                     System.out.println("\nComparaciones: "+geneticComparisons);
                     System.out.println("\nMemoria: "+geneticMemory+" bytes");
+                    System.out.println("\nTiempo: "+(timeGenetic/1000000)+" milisegundos");
                     break;
                 case 3:
                     System.out.println(crossoverUC);
