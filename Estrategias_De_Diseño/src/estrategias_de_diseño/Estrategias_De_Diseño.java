@@ -4,7 +4,7 @@ Integrantes:
     Raquel Arguedas Sánchez        - 2021032567
     Maria Fernanda Sanabria Solano - 2021005572
 Fecha de Creacion: 05/17/2022 04:40pm
-Fecha de Finalizacion: 
+Fecha de Finalizacion: 06/06/2022 2:20pm
  */
 package estrategias_de_diseño;
 
