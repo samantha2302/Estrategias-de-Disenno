@@ -519,8 +519,8 @@ public class geneticAlgorithm {
         
         //for that sets the evaluation for the 5 bests in each array
         for(int i = 0; i<5; i++){
-            xTPC += "\n"+arrayToString(arrayLpopulationTPC.get(i))+" Evaluacion "+(i+1); //set xTPC
-            xUC += "\n "+arrayToString(arrayLpopulationUC.get(i))+" Evaluacion "+(i+1);  //set xUC
+            xTPC += "\n"+arrayToString(arrayLpopulationTPC.get(i))+" Evaluacion "+(i+1)+" minWaste "+minimWaste(arrayLpopulationTPC.get(i)); //set xTPC
+            xUC += "\n "+arrayToString(arrayLpopulationUC.get(i))+" Evaluacion "+(i+1)+" minWaste "+minimWaste(arrayLpopulationUC.get(i));  //set xUC
         }
         records.addBest5TPC(xTPC);                        //set variable best5Tpc in records
         records.addBest5UC(xUC);                          //set variable best5UC in records
