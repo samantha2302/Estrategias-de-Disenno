@@ -8,6 +8,12 @@ public class geneticAlgorithm {
     private int geneticComparisons = 0; // Variable Assignment
     private int geneticAssignments = 3; // Variable Comparison
     private float memoryGenetic = 0; // Variable Memory
+    private int geneticComparisonsUC = 0; // Variable Assignment
+    private int geneticAssignmentsUC = 3; // Variable Comparison
+    private float memoryGeneticUC = 0; // Variable Memory
+    private int geneticComparisonsTPC = 0; // Variable Assignment
+    private int geneticAssignmentsTPC = 3; // Variable Comparison
+    private float memoryGeneticTPC = 0; // Variable Memory
 
     private Random r = new Random();
     
@@ -125,20 +131,20 @@ public class geneticAlgorithm {
      */
     private void generateMask(){
         mask = new int[arrayPresentations.length]; //mark to make the crossover
-        memoryGenetic+=mask.length*2; //mask
-        memoryGenetic+=2; //i memory bytes
-        geneticAssignments+=2; //mask, i
+        memoryGeneticUC+=mask.length*2; //mask
+        memoryGeneticUC+=2; //i memory bytes
+        geneticAssignmentsUC+=2; //mask, i
         for(int i = 0; i < arrayPresentations.length; i++){
-            geneticComparisons+=2;//for and if comparissons
-            geneticAssignments++; //i
+            geneticComparisonsUC+=2;//for and if comparissons
+            geneticAssignmentsUC++; //i
             
             if(((int)i/2)*2==i){
                 mask[i]=1;
-                geneticAssignments++; // mask
+                geneticAssignmentsUC++; // mask
             }
             
         }
-        geneticComparisons++;//for false comparissons
+        geneticComparisonsUC++;//for false comparissons
     }
     /**
      * @param array
@@ -161,18 +167,33 @@ public class geneticAlgorithm {
     /**
      * 
      */
-    private void aptitudeFunction(){
-        geneticAssignments++;//i
-        memoryGenetic+=2; //i memory bytes
+    private void aptitudeFunctionUC(){
+        geneticAssignmentsUC++;//i
+        memoryGeneticUC+=2; //i memory bytes
         //Get the first people in the arraylist to make the population
         for(int i = 0; i < populationUC.length; i++){
-            geneticComparisons++;//for comparissons
+            geneticComparisonsUC++;//for comparissons
             populationUC[i] = arrayLpopulationUC.get(i); 
-            populationTPC[i] = arrayLpopulationTPC.get(i);
-            geneticAssignments+=3;//populationUC, populationTPC, i
+            geneticAssignmentsUC+=2;//populationUC, i
         }
-        geneticComparisons++;//for false comparissons
+        geneticComparisonsUC++;//for false comparissons
     }
+
+    /**
+     * 
+     */
+    private void aptitudeFunctionTPC(){
+        geneticAssignmentsTPC++;//i
+        memoryGeneticTPC+=2; //i memory bytes
+        //Get the first people in the arraylist to make the population
+        for(int i = 0; i < populationTPC.length; i++){
+            geneticComparisonsTPC++;//for comparissons
+            populationTPC[i] = arrayLpopulationTPC.get(i);
+            geneticAssignmentsTPC+=2;//populationTPC, i
+        }
+        geneticComparisonsTPC++;//for false comparissons
+    }
+
     /**
      * 
      * @param arrayL
@@ -215,24 +236,24 @@ public class geneticAlgorithm {
      */
     private void uniformCrossover(int[] parent1, int[] parent2){
         int children[][] = new int [2][parent1.length]; //child1 and child2
-        memoryGenetic+=parent1.length*8; //parent1, parent2, children[0] and children[1]
-        geneticAssignments+=4; //parent1, parent2, children, i
-        memoryGenetic+=2; //i memory bytes
+        memoryGeneticUC+=parent1.length*8; //parent1, parent2, children[0] and children[1]
+        geneticAssignmentsUC+=4; //parent1, parent2, children, i
+        memoryGeneticUC+=2; //i memory bytes
         for (int i = 0; i < parent1.length; i++) {
-            geneticAssignments++;//i
-            geneticComparisons+=2;//for, if comparissons
+            geneticAssignmentsUC++;//i
+            geneticComparisonsUC+=2;//for, if comparissons
             if (mask[i]==0){ //Add from parent1 to children[0] and parent2 to children[1]
                 children[0][i] = parent1[i];
                 children[1][i] = parent2[i];
-                geneticAssignments+=2;//children[0], children[1]
+                geneticAssignmentsUC+=2;//children[0], children[1]
             }
             else{//Add from parent1 to children[1] and parent2 to children[0]
                 children[0][i] = parent2[i];
                 children[1][i] = parent1[i];
-                geneticAssignments+=2;//children[0], children[1]
+                geneticAssignmentsUC+=2;//children[0], children[1]
             }
         }
-        geneticComparisons++;//for false comparissons
+        geneticComparisonsUC++;//for false comparissons
         
         insertOrdered(arrayLpopulationUC, children[0]); //Insert children[0]
         insertOrdered(arrayLpopulationUC, children[1]); //Insert children[1]
@@ -254,33 +275,33 @@ public class geneticAlgorithm {
         int crosspoint2 = (parent1.length/2) + r.nextInt((parent1.length/2)+1); //Decides the second point to cross
         int[] child1 = new int[parent1.length]; //child 0
         int[] child2 = new int[parent1.length]; //child 1
-        geneticAssignments+=6; //parent1, parent2, crosspoint1, corsspoint2, child1, child2
-        memoryGenetic+=4;//crosspoint1, crosspoint2
-        memoryGenetic+=parent1.length*8; //parent1, parent2, child1, child2
+        geneticAssignmentsTPC+=6; //parent1, parent2, crosspoint1, corsspoint2, child1, child2
+        memoryGeneticTPC+=4;//crosspoint1, crosspoint2
+        memoryGeneticTPC+=parent1.length*8; //parent1, parent2, child1, child2
 
 
-        geneticComparisons+=4;//if comparissons
-        if (crosspoint1==0){crosspoint1++; geneticAssignments++; } //If the first point is 0 replace it for 1
-        if (crosspoint2==parent1.length-1) {crosspoint2--; geneticAssignments++;} //If the second point is the last index replace it for the one before
-        if (crosspoint1==crosspoint2) {crosspoint2++; geneticAssignments++;} //If the crosspoints are the same then increment crosspoint2
+        geneticComparisonsTPC+=4;//if comparissons
+        if (crosspoint1==0){crosspoint1++; geneticAssignmentsTPC++; } //If the first point is 0 replace it for 1
+        if (crosspoint2==parent1.length-1) {crosspoint2--; geneticAssignmentsTPC++;} //If the second point is the last index replace it for the one before
+        if (crosspoint1==crosspoint2) {crosspoint2++; geneticAssignmentsTPC++;} //If the crosspoints are the same then increment crosspoint2
 
-        geneticAssignments++; //i
-        memoryGenetic+=2; //i memory bytes
+        geneticAssignmentsTPC++; //i
+        memoryGeneticTPC+=2; //i memory bytes
         for (int i = 0; i < child1.length; i++) {
-            geneticAssignments++; //i
-            geneticComparisons+=3;//for, if comparissons
+            geneticAssignmentsTPC++; //i
+            geneticComparisonsTPC+=3;//for, if comparissons
             if (i < crosspoint1 || i > crosspoint2){ //if the index is outside the cross points put the parents values in their respective children
                 child1[i] = parent1[i]; 
                 child2[i] = parent2[i];
-                geneticAssignments+=2; //child[1] y child[2]
+                geneticAssignmentsTPC+=2; //child[1] y child[2]
             }
             else{ //if the index is between the cross points, make the crossovers
                 child1[i] = parent2[i];
                 child2[i] = parent1[i];
-                geneticAssignments+=2; //child[1] y child[2]
+                geneticAssignmentsTPC+=2; //child[1] y child[2]
             }
         }
-        geneticComparisons++;//for false comparissons
+        geneticComparisonsTPC++;//for false comparissons
         insertOrdered(arrayLpopulationTPC, child1); //insert child1 to the arrayLPopulationTPC
         insertOrdered(arrayLpopulationTPC, child2); //insert child1 to the arrayLPopulationTPC
         String x;
@@ -321,22 +342,25 @@ public class geneticAlgorithm {
      */
     private int getPuntation(int x, int arr[]){
         int puntation;
-        geneticAssignments+=2; //x y arr
-        memoryGenetic+=4; //x, puntuation
-        memoryGenetic+=arr.length*2; //arr
-        geneticComparisons++;//if comparissons
         if (x==0){
+            geneticAssignmentsUC+=2; //x y arr
+            memoryGeneticUC+=4; //x, puntuation
+            memoryGeneticUC+=arr.length*2; //arr
+            geneticComparisonsUC++;//if comparissons
             insertOrdered(arrayLpopulationUC, arr); //Insert arr into arrayLpopulationUC to see it
             puntation = arrayLpopulationUC.indexOf(arr);
             arrayLpopulationUC.remove(arr); //Remove arr into arrayLpopulationUC to see it
-            geneticAssignments+=2; //puntuation, remove
+            geneticAssignmentsUC+=3; //puntuation, remove, return
         }else{
+            geneticAssignmentsTPC+=2; //x y arr
+            memoryGeneticTPC+=4; //x, puntuation
+            memoryGeneticTPC+=arr.length*2; //arr
+            geneticComparisonsTPC++;//if comparissons
             insertOrdered(arrayLpopulationTPC, arr);  //Insert arr into arrayLpopulationTPC to see it
             puntation = arrayLpopulationTPC.indexOf(arr);
             arrayLpopulationTPC.remove(arr); //Remove arr into arrayLpopulationUC to see it
-            geneticAssignments+=2; //puntuation, remove
+            geneticAssignmentsTPC+=3; //puntuation, remove, return
         }
-        geneticAssignments++; //return
         return puntation+1;
         
     }
@@ -357,70 +381,112 @@ public class geneticAlgorithm {
         
         int minWasteBeforeMutation = minimWaste(populationTemp.get(j)); //minimum waste of the array before mutuation
         int minWasteAfterMutation = minimWaste(temp); //minimum waste of the array after mutuation
-        geneticAssignments+=7; //x, populationTemp, j, temp, temp, minWasteBeforeMutation, minWasteAfterMutation
-        geneticComparisons+=3;//ifs comparissons
-        memoryGenetic+=8;//x, j, minWasteBeforeMutation, minWasteAfterMutation
-        memoryGenetic+=temp.length*2;
-        memoryGenetic+=populationTemp.size()*populationTemp.get(0).length*2;
         
-        if (x==0){ arrayLpopulationUC.remove(j); geneticAssignments++;}  //remove in arrayLpopulationUC array in index j
-        else {arrayLpopulationTPC.remove(j); geneticAssignments++;} //remove in arrayLpopulationTPC array in index j
+        if (x==0){
+            geneticAssignmentsUC+=7; //x, populationTemp, j, temp, temp, minWasteBeforeMutation, minWasteAfterMutation
+            geneticComparisonsUC+=3;//ifs comparissons
+            memoryGeneticUC+=8;//x, j, minWasteBeforeMutation, minWasteAfterMutation
+            memoryGeneticUC+=temp.length*2;
+            memoryGeneticUC+=populationTemp.size()*populationTemp.get(0).length*2;
+            arrayLpopulationUC.remove(j); geneticAssignmentsUC++;
+            }  //remove in arrayLpopulationUC array in index j
+        else {
+            geneticAssignmentsTPC+=7; //x, populationTemp, j, temp, temp, minWasteBeforeMutation, minWasteAfterMutation
+            geneticComparisonsTPC+=3;//ifs comparissons
+            memoryGeneticTPC+=8;//x, j, minWasteBeforeMutation, minWasteAfterMutation
+            memoryGeneticTPC+=temp.length*2;
+            memoryGeneticTPC+=populationTemp.size()*populationTemp.get(0).length*2;
+            arrayLpopulationTPC.remove(j); geneticAssignmentsTPC++;
+            } //remove in arrayLpopulationTPC array in index j
 
         if (minWasteAfterMutation>0 && minWasteBeforeMutation>minWasteAfterMutation){
             geneticComparisons++;//if comparissons
-            if (x==0) insertOrdered(arrayLpopulationUC, temp); //insert in arrayLpopulationUC temp
-            else insertOrdered(arrayLpopulationTPC, temp); //insert in arrayLpopulationTPC temp
-            geneticAssignments++; //return
+            if (x==0){
+                geneticComparisonsUC+=2;//if comparissons
+                insertOrdered(arrayLpopulationUC, temp);//insert in arrayLpopulationUC temp
+                geneticAssignmentsUC++; //return
+            } 
+            else {
+                geneticComparisonsTPC+=2;//if comparissons
+                insertOrdered(arrayLpopulationTPC, temp); //insert in arrayLpopulationTPC temp
+                geneticAssignmentsTPC++; //return
+            }
+            
             return -1;
         }
-        geneticAssignments++; //return
+        if (x==0) geneticAssignmentsUC++; //return
+        else geneticAssignmentsTPC++; //return
         return 0;
     }
 
     /**
      * 
      */
-    private void mutation(){
+    private void mutationUC(){
         int flag; //flag that changes when two items of two diferent arrays are diferent
-        ArrayList<int[]> populationTemp = arrayLpopulationUC; //first populationTemp is going to be arrayLpopulationUC
-        geneticAssignments+=2; //populationTemp, x assignments
-        memoryGenetic+=4; //flag, x memory
-        memoryGenetic+=populationTemp.size()*populationTemp.get(0).length; //populationTemp memory
-        for(int x = 0; x < 2; x++){
-            geneticComparisons+=2;//if, for comparissons
-            if (x==1){ //second populationTemp is going to be arrayLpopulationTPC
-                populationTemp = arrayLpopulationTPC;
-                geneticAssignments++;//populationTemp assignment
-            }; 
-            geneticAssignments+=2; //x, i first assignment 
-            geneticComparisons++;//while comparissons
-            memoryGenetic+=2; //i memory bytes
-            for(int i = 0; i < populationTemp.size()-1; i++){
-                geneticComparisons++;//for comparissons
-                geneticAssignments+=2; //i, j first assignment 
-                memoryGenetic+=2; //i memory bytes
-                for(int j = i+1; j < populationTemp.size(); j++){
-                    geneticComparisons++;//for comparissons
-                    flag = 0; //flag starts at 0, assuming 
-                    geneticAssignments+=2; //j, k first assignments
-                    memoryGenetic+=2; //i memory bytes
-                    for(int k=0; k<populationTemp.get(i).length; k++){
-                        geneticComparisons+=2;//if, for comparissons
-                        geneticAssignments++; //k assignments
-                        if (populationTemp.get(i)[k] != populationTemp.get(j)[k]) {flag = 1; geneticAssignments++;} //if it founds an element that is not equal the flag turns to one
-                    }
-                    geneticComparisons+=2;//if, for false comparissons
-                    if (flag == 0){
-                        j += checkDelete(x, populationTemp, j);
-                        i = 0;
-                        break;
-                    } //if an array is repeated, checks if it the mutation applies or if is deleated
+        memoryGeneticUC+=4; //flag, i
+        geneticAssignmentsUC++; //i first assignment 
+        for(int i = 0; i < arrayLpopulationUC.size()-1; i++){
+            geneticComparisonsUC++;//for comparissons
+            geneticAssignmentsUC+=2; //i, j first assignment 
+            memoryGeneticUC+=2; //j memory bytes
+            for(int j = i+1; j < arrayLpopulationUC.size(); j++){
+                geneticComparisonsUC++;//for comparissons
+                flag = 0; //flag starts at 0, assuming 
+                geneticAssignmentsUC+=2; //j, k first assignments
+                memoryGeneticUC+=2; //k memory bytes
+                for(int k=0; k<arrayLpopulationUC.get(i).length; k++){
+                    geneticComparisonsUC+=2;//if, for comparissons
+                    geneticAssignmentsUC++; //k assignments
+                    if (arrayLpopulationUC.get(i)[k] != arrayLpopulationUC.get(j)[k]) {flag = 1; geneticAssignmentsUC++;} //if it founds an element that is not equal the flag turns to one
                 }
-                geneticComparisons++;//for false comparissons
+                geneticComparisonsUC+=2;//if, for false comparissons
+                if (flag == 0){
+                    j += checkDelete(0, arrayLpopulationUC, j);
+                    i = 0;
+                    geneticAssignmentsUC++; //i assignment
+                    break;
+                } //if an array is repeated, checks if it the mutation applies or if is deleated
             }
-            geneticComparisons++;//for false comparissons
+            geneticComparisonsUC++;//for false comparissons
         }
-        geneticComparisons++;//for false comparissons
+        geneticComparisonsUC++;//for false comparissons
+        
+    }
+
+    /**
+     * 
+     */
+    private void mutationTPC(){
+        int flag; //flag that changes when two items of two diferent arrays are diferent
+        memoryGeneticTPC+=4; //flag, i
+        geneticAssignmentsTPC++; //i first assignment 
+        for(int i = 0; i < arrayLpopulationTPC.size()-1; i++){
+            geneticComparisonsTPC++;//for comparissons
+            geneticAssignmentsTPC+=2; //i, j first assignment 
+            memoryGeneticTPC+=2; //j memory bytes
+            for(int j = i+1; j < arrayLpopulationTPC.size(); j++){
+                geneticComparisonsTPC++;//for comparissons
+                flag = 0; //flag starts at 0, assuming 
+                geneticAssignmentsTPC+=2; //j, k first assignments
+                memoryGeneticTPC+=2; //k memory bytes
+                for(int k=0; k<arrayLpopulationTPC.get(i).length; k++){
+                    geneticComparisonsTPC+=2;//if, for comparissons
+                    geneticAssignmentsTPC++; //k assignments
+                    if (arrayLpopulationTPC.get(i)[k] != arrayLpopulationTPC.get(j)[k]) {flag = 1; geneticAssignmentsTPC++;} //if it founds an element that is not equal the flag turns to one
+                }
+                geneticComparisonsTPC+=2;//if, for false comparissons
+                if (flag == 0){
+                    j += checkDelete(1, arrayLpopulationTPC, j);
+                    i = 0;
+                    geneticAssignmentsTPC++; //i assignment
+                    break;
+                } //if an array is repeated, checks if it the mutation applies or if is deleated
+            }
+            geneticComparisonsTPC++;//for false comparissons
+        }
+        geneticComparisonsTPC++;//for false comparissons
+        
     }
 
     /**
@@ -429,37 +495,73 @@ public class geneticAlgorithm {
      * @param numChild
      * function that does the crossovers
      */
-    private void doCrossovers(int numCrossover, int numChild){
+    private void doCrossoversUC(int numCrossover, int numChild){
         int tmp;                //tmp used for saving the numChild
-        geneticAssignments+=3; //numCrossover,numChild, i
-        memoryGenetic+=8; //numCrossover, numChild, tmp, i memory bytes
-        
+        geneticAssignmentsUC+=3; //numCrossover,numChild, i
+        memoryGeneticUC+=8; //numCrossover, numChild, tmp, i memory bytes
         //for that does the quantity of crossovers needeed
         for (int i = 0; i < numCrossover; i++) {
-            geneticComparisons++;//for comparissons
-            geneticAssignments+=3; //tmp, i, k
-            memoryGenetic+=2; //k memory bytes
+            geneticComparisonsUC++;//for comparissons
+            geneticAssignmentsUC+=3; //tmp, i, k
+            memoryGeneticUC+=2; //k memory bytes
             tmp = numChild;   //give the tmp the value of numChild
             forMid:           //the next two fors do all the possible pairs of arrays 
             for(int k = 0; k<populationUC.length-1; k++){
-                geneticComparisons++;//for comparissons
-                geneticAssignments+=2; //k,j assignments
-                memoryGenetic+=2; //j memory bytes
+                geneticComparisonsUC++;//for comparissons
+                geneticAssignmentsUC+=2; //k,j assignments
+                memoryGeneticUC+=2; //j memory bytes
                 for(int j = k+1; j<populationUC.length; j++){
-                    geneticComparisons+=2;//for comparissons and if
-                    geneticAssignments+=2;//j, tmp assignment
+                    geneticComparisonsUC+=2;//for comparissons and if
+                    geneticAssignmentsUC+=2;//j, tmp assignment
                     uniformCrossover(populationUC[k], populationUC[j]); //does the uniformCrossover
-                    twoPointsCrossover(populationTPC[k], populationTPC[j]);//does the twoPointsCrossover
-                    mutation();//does the required mutations
-                    aptitudeFunction();//does the aptitude fuction
+                    mutationUC();//does the required mutations of the uniform crossover
+                    aptitudeFunctionUC();//does the aptitude fuction
                     tmp-=2;//substract the amount of childs created
                     if(tmp<=0) break forMid; //if all the childs that need to be done are ready, it stops
                 }
-                geneticComparisons++;//for false comparissons
+                geneticComparisonsUC++;//for false comparissons
             }   
-            geneticComparisons++;//for false comparissons     
+            geneticComparisonsUC++;//for false comparissons     
         }
-        geneticComparisons++;//for false comparissons   
+        geneticComparisonsUC++;//for false comparissons
+    }
+
+    /**
+     * 
+     * @param numCrossover
+     * @param numChild
+     * function that does the crossovers
+     */
+    private void doCrossoversTPC(int numCrossover, int numChild){
+        int tmp;                //tmp used for saving the numChild
+        geneticAssignmentsTPC+=3; //numCrossover,numChild, i
+        memoryGeneticTPC+=8; //numCrossover, numChild, tmp, i memory bytes
+        
+        //for that does the quantity of crossovers needeed
+        for (int i = 0; i < numCrossover; i++) {
+            geneticComparisonsTPC++;//for comparissons
+            geneticAssignmentsTPC+=3; //tmp, i, k
+            memoryGeneticTPC+=2; //k memory bytes
+            tmp = numChild;   //give the tmp the value of numChild
+            forMid:           //the next two fors do all the possible pairs of arrays 
+            for(int k = 0; k<populationTPC.length-1; k++){
+                geneticComparisonsTPC++;//for comparissons
+                geneticAssignmentsTPC+=2; //k,j assignments
+                memoryGeneticTPC+=2; //j memory bytes
+                for(int j = k+1; j<populationTPC.length; j++){
+                    geneticComparisonsTPC+=2;//for comparissons and if
+                    geneticAssignmentsTPC+=2;//j, tmp assignment
+                    twoPointsCrossover(populationTPC[k], populationTPC[j]);//does the twoPointsCrossover
+                    mutationTPC();//does the required mutations of the twoPoints crossover
+                    aptitudeFunctionTPC();//does the aptitude fuction
+                    tmp-=2;//substract the amount of childs created
+                    if(tmp<=0) break forMid; //if all the childs that need to be done are ready, it stops
+                }
+                geneticComparisonsTPC++;//for false comparissons
+            }   
+            geneticComparisonsTPC++;//for false comparissons     
+        }
+        geneticComparisonsTPC++;//for false comparissons
     }
     /**
      * 
@@ -484,18 +586,13 @@ public class geneticAlgorithm {
     private int[] getBest(int [] array1,int [] array2){
         int waste1 = minimWaste(array1); //get the lowest waste of each array
         int waste2 = minimWaste(array2);
-        geneticAssignments+=4;           //array1, array2, waste1, waste2 assignments
-        geneticComparisons+=2;           //if comparissons
-        memoryGenetic+=4;                //waste1, waste2 memory
-        memoryGenetic+=array1.length*4;  //array1, array2 memory
         
         //get the waste that is closest to n
         if (waste1<0 || waste2<0){
-            if (waste2 > waste1) {geneticAssignments++; return array2;} 
+            if (waste2 > waste1) {return array2;} 
         }else{
-            if (waste2 < waste1) {geneticAssignments++; return array2;} 
+            if (waste2 < waste1) {return array2;} 
         }
-        geneticAssignments++;
         return array1; //return the array that has that waste
     }
     
@@ -503,11 +600,30 @@ public class geneticAlgorithm {
      * 
      */
     public void searchMinWaste(){
-        
+        long time_start, time_end;
+        long timeGeneral; // time for both crossovers
         //Genetic Proccess
+        time_start = System.nanoTime(); 
         generatePopulation();
         generateMask();
-        doCrossovers(defCrossoverNum(arrayPresentations.length), defChildNum(arrayPresentations.length));
+        time_end = System.nanoTime();
+        timeGeneral = ( time_end - time_start );
+        int crossoverNum = defCrossoverNum(arrayPresentations.length);
+        int childNum = defChildNum(arrayPresentations.length);
+        memoryGenetic+=4; //crossoverNum, childNum
+
+        long time; // time for each crossover individually
+        time_start = System.nanoTime(); 
+        doCrossoversUC(crossoverNum, childNum);
+        time_end = System.nanoTime();
+        time = ( time_end - time_start );
+        records.setGeneticTimeUC((timeGeneral + time));
+
+        time_start = System.nanoTime(); 
+        doCrossoversTPC(crossoverNum, childNum);
+        time_end = System.nanoTime();
+        time = ( time_end - time_start );
+        records.setGeneticTimeTPC((timeGeneral + time));
 
         //Records
         String xTPC="";
@@ -527,6 +643,12 @@ public class geneticAlgorithm {
         records.setGeneticAssignments(geneticAssignments);//set variable geneticAssigments in records
         records.setGeneticComparisons(geneticComparisons);//set variable geneticComparisson in records
         records.setGeneticMemory(memoryGenetic);          //set variable geneticMemory in records
+        records.setGeneticAssignmentsUC(geneticAssignmentsUC);//set variable geneticAssigments in records
+        records.setGeneticComparisonsUC(geneticComparisonsUC);//set variable geneticComparisson in records
+        records.setGeneticMemoryUC(memoryGeneticUC);          //set variable geneticMemory in records
+        records.setGeneticAssignmentsTPC(geneticAssignmentsTPC);//set variable geneticAssigments in records
+        records.setGeneticComparisonsTPC(geneticComparisonsTPC);//set variable geneticComparisson in records
+        records.setGeneticMemoryTPC(memoryGeneticTPC);          //set variable geneticMemory in records
         
     } 
 

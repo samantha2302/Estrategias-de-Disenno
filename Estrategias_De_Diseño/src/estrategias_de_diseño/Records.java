@@ -16,22 +16,25 @@ public class Records {
     private int geneticAssignments;
     private int geneticComparisons;
     private float geneticMemory;
+    private int geneticAssignmentsUC;
+    private int geneticComparisonsUC;
+    private float geneticMemoryUC;
+    private int geneticAssignmentsTPC;
+    private int geneticComparisonsTPC;
+    private float geneticMemoryTPC;
     private long timeDynamic;
-    private long timeGenetic;
+    private long timeGeneticUC;
+    private long timeGeneticTPC;
 
     public void menu(int [] array, int num){
         int option = 0;
         Scanner ask = new Scanner(System.in);
         long time_start, time_end;
         time_start = System.nanoTime(); 
-        (new geneticAlgorithm(this, array, num)).searchMinWaste();
-        time_end = System.nanoTime();
-        timeGenetic = ( time_end - time_start );
-        time_start = System.nanoTime(); 
         (new dynamicAlgorithm(this)).printMinWaste(array, num);
         time_end = System.nanoTime();
         timeDynamic = ( time_end - time_start );
-        
+        (new geneticAlgorithm(this, array, num)).searchMinWaste();
         while (true){
             System.out.print("\n\tConsultas\n\n");
             System.out.print("\n\nDigite \n\t1) Desperdicio y Mejor Combinación\n\t"+
@@ -52,10 +55,16 @@ public class Records {
                     System.out.println("\nMemoria: "+dynamicMemory+" bytes");
                     System.out.println("\nTiempo: "+(timeDynamic/1000000)+" milisegundos");
                     System.out.println("\n\n===================Algoritmo Genético===================\n");
-                    System.out.println("\nAsignaciones: "+geneticAssignments);
-                    System.out.println("\nComparaciones: "+geneticComparisons);
-                    System.out.println("\nMemoria: "+geneticMemory+" bytes");
-                    System.out.println("\nTiempo: "+(timeGenetic/1000000)+" milisegundos");
+                    System.out.println("\n\t========Cruce Two Points========\n");
+                    System.out.println("\nAsignaciones: "+(geneticAssignmentsTPC+geneticAssignments));
+                    System.out.println("\nComparaciones: "+(geneticComparisonsTPC+geneticComparisons));
+                    System.out.println("\nMemoria: "+(geneticMemoryTPC+geneticMemory)+" bytes");
+                    System.out.println("\nTiempo: "+(timeGeneticTPC/1000000)+" milisegundos");
+                    System.out.println("\n\t========Cruce Uniform========\n");
+                    System.out.println("\nAsignaciones: "+(geneticAssignmentsUC+geneticAssignments));
+                    System.out.println("\nComparaciones: "+(geneticComparisonsUC+geneticComparisons));
+                    System.out.println("\nMemoria: "+(geneticMemoryUC+geneticMemory)+" bytes");
+                    System.out.println("\nTiempo: "+(timeGeneticUC/1000000)+" milisegundos");
                     break;
                 case 3:
                     System.out.println(crossoverUC);
@@ -88,7 +97,15 @@ public class Records {
     public void setGeneticAssignments(int n){ geneticAssignments = n; }
     public void setGeneticComparisons(int n){ geneticComparisons = n; }
     public void setGeneticMemory(float n){ geneticMemory = n; }
-    
+    public void setGeneticAssignmentsUC(int n){ geneticAssignmentsUC = n; }
+    public void setGeneticComparisonsUC(int n){ geneticComparisonsUC = n; }
+    public void setGeneticMemoryUC(float n){ geneticMemoryUC = n; }
+    public void setGeneticAssignmentsTPC(int n){ geneticAssignmentsTPC = n; }
+    public void setGeneticComparisonsTPC(int n){ geneticComparisonsTPC = n; }
+    public void setGeneticMemoryTPC(float n){ geneticMemoryTPC = n; }
+    public void setGeneticTimeTPC(long n){ timeGeneticTPC = n; }
+    public void setGeneticTimeUC(long n){ timeGeneticUC = n; }
+
     public void addToMutations(String add){ mutations += add; }
     public void addToWasteAndCombination(String add){ wasteAndCombination += add; }
 
